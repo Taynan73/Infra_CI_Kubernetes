@@ -10,7 +10,8 @@ terraform {
 }
 
 provider "aws" {
-  region  = "us-west-2"
+  region  = "us-east-1"
+  profile = "terraform-admin"
 }
 
 provider "kubernetes" {
@@ -18,7 +19,7 @@ provider "kubernetes" {
   cluster_ca_certificate = base64decode(module.eks.cluster_certificate_authority_data)
   exec {
     api_version = "client.authentication.k8s.io/v1beta1"
-    args        = ["eks", "get-token", "--cluster-name", var.cluster_name]
+    args        = ["eks", "get-token", "--cluster-name", var.cluster_name, "--profile", "terraform-admin"]
     command     = "aws"
   }
 }
